@@ -27,7 +27,7 @@ module.exports.addData =async function(req, res) {                 //data sent t
         limit: per_page ,
         skip:per_page * (page_no - 1)
       }
-      const pushedData = await Data.find({title:req.body.title}).limit(pagination.limit).skip(pagination.skip);
+      const pushedData = await Data.find({title:req.body.title}).limit(pagination.limit).skip(pagination.skip).orderBy('created_at', 'desc');
 
 
       return res.send(pushedData);
