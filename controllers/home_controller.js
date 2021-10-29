@@ -18,7 +18,7 @@ module.exports.addData =async function(req, res) {                 //data sent t
   }
 
 
-  module.exports.findData =async function(req, res) {           
+  module.exports.findData =async function(req, res) {           // getting data from db
     try {
       
       per_page = parseInt(req.query.per_page) || 10
