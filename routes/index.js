@@ -4,9 +4,8 @@ const homeController = require('../controllers/home_controller');
 
 console.log('router loaded');
 
-router.get('/fetch', homeController.fetch);             //routes to get data from database
+router.get('/addData', homeController.addData);             //routes to get data from database
 
-router.get('/', homeController.home);                   // routes to redirect to html page
-
+router.get('/findData', homeController.findData);
 
 module.exports = router;

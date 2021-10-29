@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 const port = 8000;
 const db = require("./config/mongoose");
-const Coin = require("./models/coins");
+const Coin = require("./models/data");
 const axios = require('axios');
 app.use(express.urlencoded({extended:true}));
 

@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
-const coinSchema = new mongoose.Schema({
-    allcoins: {
+const dataSchema = new mongoose.Schema({
+    title: {
         type: String
         
     },
+    
     id:{
         type: Number
     }
@@ -13,6 +14,6 @@ const coinSchema = new mongoose.Schema({
 });
 
 
-const Coin = mongoose.model('Coin', coinSchema);
+const Data = mongoose.model('Data', dataSchema);
 
-module.exports = Coin;
+module.exports = Data;

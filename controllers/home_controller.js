@@ -1,48 +1,38 @@
 const path = require('path');
-const Coin = require("../models/coins");
+const Data = require("../models/data");
 const axios = require('axios');
-async function  sendToDb(req,res) {                 //data sent to database
+module.exports.addData =async function(req, res) {                 //data sent to database
     try {
-      const response = await axios.get('https://api.wazirx.com/api/v2/tickers');
-      let fetchedData = response.data;
-      let stringData = JSON.stringify(fetchedData);
-      const pushData = await Coin.findByIdAndUpdate({_id:'616b0149a325c444ea4e1e2a'},{allcoins:stringData});
-      return fetchedData;
+      setInterval(await function(){ 
+        
+        const response =  axios.get('https://youtube.googleapis.com/youtube/v3/search?part=snippet&forMine=true&maxResults=25&q=fun&type=video');
+        let fetchedData = response.data;
+        Data.create({title:fetchedData.title});
+      
+      }, 3000);
+      
+      res.status(200).send('ok');
     } catch (error) {
       console.error(error);
     }
   }
 
 
-  async function getFromDb(req,res) {           
+  module.exports.findData =async function(req, res) {           
     try {
       
-      const pushData = await Coin.find({});
-      return pushData;
+      per_page = parseInt(req.query.per_page) || 10
+      page_no = parseInt(req.query.page_no) || 1
+      var pagination = {
+        limit: per_page ,
+        skip:per_page * (page_no - 1)
+      }
+      const pushedData = await Data.find({title:req.body.title}).limit(pagination.limit).skip(pagination.skip);
+
+
+      return res.send(pushedData);
     } catch (error) {
       console.error(error);
     }
   }
 
-
-module.exports.fetch =async function(req, res){
-    
-    sendToDb();
-    const data = await getFromDb();
-    const myJSON = JSON.stringify(data);
-    const myArr = myJSON.split("}");
-    let firstTen = [];
-    for(let i=0;i<10;i++){
-      myArr[i].replace(/\/$/, '');
-      
-      firstTen.push(myArr[i]);
-    }
-
-   res.send(firstTen);
-
-}
-
-module.exports.home = function(req,res){
-    res.sendFile(path.join(__dirname + '/../index.html'));
-
-}
